@@ -18,3 +18,5 @@ Route::post('/view/{post}/comments', 'CommentsController@store');
 Route::get('/view/{post}', 'PostsController@show');
 Route::get('/view/{post}/edit', 'PostsController@edit');
 Route::patch('/view/{post}', 'PostsController@update');
+
+Route::resource('users', 'UsersController');
