@@ -11,6 +11,8 @@
 |
 */
 
+Route::auth();
+
 Route::get('/', 'PostsController@index');
 Route::post('/add', 'PostsController@store');
 Route::get('/add', 'PostsController@add');
