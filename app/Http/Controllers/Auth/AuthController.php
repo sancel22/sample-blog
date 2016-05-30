@@ -71,4 +71,22 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+
+    protected function login()
+    {
+        return view('auth.login');
+    }
+
+    protected function processLogIn()
+    {
+        if (Auth::attempt(['email' => 'admin@yopmail.com', 'password' => bcrypt('123456')], false)) {
+            redirect('/');
+        }
+    }
+
+    protected function logout()
+    {
+        Auth::logout();
+        return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
+    }
 }

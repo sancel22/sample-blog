@@ -11,7 +11,9 @@
 |
 */
 
-Route::auth();
+Route::get('/login', 'Auth\AuthController@login');
+Route::post('/login', 'Auth\AuthController@processLogIn');
+Route::get('/logout', 'Auth\AuthController@logout');
 
 Route::get('/', 'PostsController@index');
 Route::post('/add', 'PostsController@store');

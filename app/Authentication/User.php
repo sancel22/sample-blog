@@ -6,14 +6,25 @@ use Illuminate\Contracts\Auth\Authenticatable;
 
 class User implements Authenticatable
 {
+    protected $id;
+    protected $email;
+    protected $password;
+    protected $name;
 
+    public function __construct()
+    {
+        $this->id = 123;
+        $this->email = 'admin@yopmail.com';
+        $this->password = bcrypt('123456');
+        $this->name = 'Dummy User';
+    }
     /**
      * @return string
      */
     public function getAuthIdentifierName()
     {
         // Return the name of unique identifier for the user (e.g. "id")
-        return $this->id;
+        return 'id';
     }
 
     /**
@@ -22,7 +33,7 @@ class User implements Authenticatable
     public function getAuthIdentifier()
     {
         // Return the unique identifier for the user (e.g. their ID, 123)
-        return $this->value;
+        return $this->id;
     }
 
     /**
@@ -31,7 +42,7 @@ class User implements Authenticatable
     public function getAuthPassword()
     {
         // Returns the (hashed) password for the user
-        return brcypt('123456');
+        return $this->password;
     }
 
     /**

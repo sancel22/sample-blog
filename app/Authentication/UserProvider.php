@@ -3,15 +3,20 @@
 namespace App\Authentication;
 
 use Illuminate\Contracts\Auth\Authenticatable;
-use App\Authentication\User;
+use App\Authentication\User as UserContract;
+//use Illuminate\Contracts\Auth\User as UserContract;
 use Illuminate\Contracts\Auth\UserProvider as IlluminateUserProvider;
 
 class UserProvider implements IlluminateUserProvider
 {
 
-    public function __construct()
+    protected $model;
+
+    public function __construct(UserContract $model)
     {
+        $this->model = $model;
     }
+
     /**
      * @param  mixed  $identifier
      * @return \Illuminate\Contracts\Auth\Authenticatable|null
@@ -19,7 +24,7 @@ class UserProvider implements IlluminateUserProvider
     public function retrieveById($identifier)
     {
         // Get and return a user by their unique identifier
-        return new User;
+        return $this->model;
         //return 'id';
     }
 
@@ -31,7 +36,7 @@ class UserProvider implements IlluminateUserProvider
     public function retrieveByToken($identifier, $token)
     {
         // Get and return a user by their unique identifier and "remember me" token
-        return new User;
+        return $this->model;
     }
 
     /**
@@ -42,6 +47,7 @@ class UserProvider implements IlluminateUserProvider
     public function updateRememberToken(Authenticatable $user, $token)
     {
         // Save the given "remember me" token for the given user
+        return $this->model;
     }
 
     /**
@@ -53,6 +59,7 @@ class UserProvider implements IlluminateUserProvider
     public function retrieveByCredentials(array $credentials)
     {
         // Get and return a user by looking up the given credentials
+        return $this->model;
     }
 
     /**
@@ -65,6 +72,10 @@ class UserProvider implements IlluminateUserProvider
     public function validateCredentials(Authenticatable $user, array $credentials)
     {
         // Check that given credentials belong to the given user
+        print_r($credentials);
+        
+        dd($user);
+
         return true;
     }
 }

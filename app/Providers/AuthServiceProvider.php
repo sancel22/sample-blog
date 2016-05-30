@@ -18,7 +18,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         Auth::provider('dmm_user_provider', function ($app, array $config) {
-            return new UserProvider();
+            return new UserProvider(new User);
         });
     }
 
