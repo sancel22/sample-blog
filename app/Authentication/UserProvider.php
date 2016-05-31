@@ -2,20 +2,17 @@
 
 namespace App\Authentication;
 
+use Hash;
+use App\Authentication\User;
+use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Authenticatable;
-use App\Authentication\User as UserContract;
+
 //use Illuminate\Contracts\Auth\User as UserContract;
 use Illuminate\Contracts\Auth\UserProvider as IlluminateUserProvider;
 
 class UserProvider implements IlluminateUserProvider
 {
-
-    protected $model;
-
-    public function __construct(UserContract $model)
-    {
-        $this->model = $model;
-    }
+    protected $user;
 
     /**
      * @param  mixed  $identifier
@@ -24,8 +21,18 @@ class UserProvider implements IlluminateUserProvider
     public function retrieveById($identifier)
     {
         // Get and return a user by their unique identifier
-        return $this->model;
-        //return 'id';
+        $request = Request::create("http://blog.dev/user/{$identifier}",'GET');
+        $data = json_decode($request);
+        if(count($data) > 0){
+            $this->user = new User();
+            $this->id = $data['id'];
+            $this->name = $data['name'];
+            $this->email = $data['email'];
+            $this->password = $data['password'];
+
+            return $this->$user;
+        }
+        return 'id';
     }
 
     /**
@@ -36,7 +43,7 @@ class UserProvider implements IlluminateUserProvider
     public function retrieveByToken($identifier, $token)
     {
         // Get and return a user by their unique identifier and "remember me" token
-        return $this->model;
+        return $this->user;
     }
 
     /**
@@ -47,7 +54,7 @@ class UserProvider implements IlluminateUserProvider
     public function updateRememberToken(Authenticatable $user, $token)
     {
         // Save the given "remember me" token for the given user
-        return $this->model;
+        return $user->remember_me = $token;
     }
 
     /**
@@ -59,7 +66,13 @@ class UserProvider implements IlluminateUserProvider
     public function retrieveByCredentials(array $credentials)
     {
         // Get and return a user by looking up the given credentials
-        return $this->model;
+        $this->user = new User();
+        $this->user->id = 123;
+        $this->user->email= 'admin1@yopmail.com';
+        $this->user->password = '123456';
+        $this->user->name= 'Cel';
+        $this->user->remember_me = bcrypt(time());
+        return $this->user;
     }
 
     /**
@@ -72,10 +85,9 @@ class UserProvider implements IlluminateUserProvider
     public function validateCredentials(Authenticatable $user, array $credentials)
     {
         // Check that given credentials belong to the given user
-        print_r($credentials);
-        
-        dd($user);
+        $cred = $credentials['password'];
+        $user_cred = $user->getAuthPassword();
+        return ($cred === $user_cred);
 
-        return true;
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use Auth;
-use App\Authentication\User;
 use App\Authentication\UserProvider;
 use Illuminate\Support\ServiceProvider;
 
@@ -18,7 +17,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         Auth::provider('dmm_user_provider', function ($app, array $config) {
-            return new UserProvider(new User);
+            return new UserProvider();
         });
     }
 

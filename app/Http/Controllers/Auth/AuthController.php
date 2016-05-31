@@ -77,11 +77,12 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    protected function processLogIn()
+    protected function processLogIn(Request $request)
     {
-        if (Auth::attempt(['email' => 'admin@yopmail.com', 'password' => bcrypt('123456')], false)) {
-            redirect('/');
+        if (Auth::attempt($request->all())) {
+            return redirect('/');
         }
+        return back();
     }
 
     protected function logout()

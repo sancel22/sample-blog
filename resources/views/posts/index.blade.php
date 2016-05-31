@@ -11,6 +11,7 @@
     <br>
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
+        {{ ( Auth::user() )}}
             <ul class="list-group">
                 @foreach($posts as $post)
                     <li class="list-group-item">

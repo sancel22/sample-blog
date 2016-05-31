@@ -5,10 +5,8 @@
     <div class="col-md-6 col-md-offset-3">
         <h3>Login</h3>
         <hr>
-        {{ print_r(Auth::user()) }}
-        {{var_dump(Auth::check())}}
-        @if( Auth::check() ) 
-            <h1>logged</h1>
+        @if(count($errors) > 0 )
+         var_dump($errors);
         @endif
         <form action="/login" method="POST">
             {{ csrf_field() }}

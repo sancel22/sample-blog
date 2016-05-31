@@ -6,18 +6,12 @@ use Illuminate\Contracts\Auth\Authenticatable;
 
 class User implements Authenticatable
 {
-    protected $id;
-    protected $email;
-    protected $password;
-    protected $name;
+    public $id;
+    public $email;
+    public $password;
+    public $name;
+    public $remember_me;
 
-    public function __construct()
-    {
-        $this->id = 123;
-        $this->email = 'admin@yopmail.com';
-        $this->password = bcrypt('123456');
-        $this->name = 'Dummy User';
-    }
     /**
      * @return string
      */
@@ -51,6 +45,7 @@ class User implements Authenticatable
     public function getRememberToken()
     {
         // Return the token used for the "remember me" functionality
+        return $this->remember_me;
     }
 
     /**
@@ -60,6 +55,7 @@ class User implements Authenticatable
     public function setRememberToken($value)
     {
         // Store a new token user for the "remember me" functionality
+        $this->remember_me = $value;
     }
 
     /**
@@ -68,5 +64,6 @@ class User implements Authenticatable
     public function getRememberTokenName()
     {
         // Return the name of the column / attribute used to store the "remember me" token
+        return 'remember_me';
     }
 }
