@@ -5,9 +5,7 @@
     <div class="col-md-6 col-md-offset-3">
         <h3>Login</h3>
         <hr>
-        @if(count($errors) > 0 )
-         var_dump($errors);
-        @endif
+         {{ var_dump($errors->all()) }}
         <form action="/login" method="POST">
             {{ csrf_field() }}
             <div class="form-group">

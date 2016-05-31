@@ -10,8 +10,18 @@ class User implements Authenticatable
     public $email;
     public $password;
     public $name;
-    public $remember_me;
+    public $remember_token;
 
+    public function __construct($user = null)
+    {
+        if (is_object($user)) {
+            $this->id = $user->id;
+            $this->email = $user->email;
+            $this->password = $user->password;
+            $this->name = $user->name;
+            $this->remember_token = $user->remember_token;
+        }
+    }
     /**
      * @return string
      */
@@ -45,7 +55,7 @@ class User implements Authenticatable
     public function getRememberToken()
     {
         // Return the token used for the "remember me" functionality
-        return $this->remember_me;
+        return $this->remember_token;
     }
 
     /**
@@ -55,7 +65,7 @@ class User implements Authenticatable
     public function setRememberToken($value)
     {
         // Store a new token user for the "remember me" functionality
-        $this->remember_me = $value;
+        $this->remember_token = $value;
     }
 
     /**
@@ -64,6 +74,6 @@ class User implements Authenticatable
     public function getRememberTokenName()
     {
         // Return the name of the column / attribute used to store the "remember me" token
-        return 'remember_me';
+        return 'remember_token';
     }
 }
